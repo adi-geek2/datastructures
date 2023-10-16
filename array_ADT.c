@@ -85,6 +85,55 @@ int BinarySearch(struct Array arr, int key){
     return -1;
 }
 
+int get(struct Array arr, int index){
+    return arr.A[index];
+}
+
+void set(struct Array *arr, int index, int value){
+    arr->A[index] = value;
+}
+
+int Min(struct Array arr){
+    int min = arr.A[0];
+    for (size_t i = 1; i < arr.length; i++)
+    {
+        if (arr.A[i] < min)
+        {
+            min = arr.A[i];
+        }
+        
+    }
+    return min;
+}
+
+int Max(struct Array arr){
+    int max = arr.A[0];
+    for (size_t i = 1; i < arr.length; i++)
+    {
+        if (arr.A[i] > max)
+        {
+            max = arr.A[i];
+        }
+        
+    }
+    return max;
+}
+
+int sum(struct Array arr){
+    int sum = 0;
+    for (size_t i = 0; i < arr.length; i++)
+    {
+        sum = sum + arr.A[i];   
+    }
+    return sum;
+}
+
+float avg(struct Array arr){
+    float average = 0;
+    average = (float) sum(arr) / arr.length;
+    return average;
+}
+
 int main(){
     struct Array arr ={{2,3,4,5,6},10,5};
     /*	
@@ -103,7 +152,6 @@ int main(){
     }
     Append(&arr, 10);
     printf("AFter appending: \n");
-    Display(arr);
     Insert(&arr, 2, 20);
     printf("AFter insertion: \n");
     Display(arr);
@@ -113,8 +161,17 @@ int main(){
     printf("Deleted value is : %d", del_value);
     printf("element found at %d \n", LinearSearch(&arr, 4));
     Display(arr);   
+    printf("Element found at %d \n", BinarySearch(arr, 2));
     */
-    printf("element found at %d \n", BinarySearch(arr, 2));
+    printf("Get element at 2 : %d \n", get(arr, 2));
+    printf("Set element at 22 at 2 \n");
+    set(&arr, 2, 22);
+    Display(arr);
+    printf("Min element %d \n", Min(arr));
+    printf("Max element %d \n", Max(arr));
+    printf("Sum of elements is %d \n", sum(arr));
+    printf("Average of elements is %f \n", avg(arr));
+
     return 0;
       
 }
