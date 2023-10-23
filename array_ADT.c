@@ -162,6 +162,28 @@ void reverse2(struct Array *arr){
        
 }
 
+void shift_left(struct Array *arr){
+    
+
+    for (size_t i = 0; i < (arr->length-1) ; i++)
+    {
+        arr->A[i] = arr->A[i+1];
+    }
+    arr->A[arr->length-1] = 0;
+       
+}
+
+void rotate_left(struct Array *arr){
+    
+    int temp = arr->A[0];
+    for (size_t i = 0; i < (arr->length-1) ; i++)
+    {
+        arr->A[i] = arr->A[i+1];
+    }
+    arr->A[arr->length-1] = temp;
+       
+}
+
 int main(){
     struct Array arr ={{2,3,4,5,6},10,5};
     /*	
@@ -200,8 +222,8 @@ int main(){
     printf("Sum of elements is %d \n", sum(arr));
     printf("Average of elements is %f \n", avg(arr));
     */
-    reverse2(&arr);
-    printf("Array reversed: \n");
+    rotate_left(&arr);
+    printf("Array left rotated: \n");
     Display(arr);
     return 0;
 }
