@@ -11,7 +11,7 @@ struct Array
 void Display(struct Array arr)
 {
     int m;
-    m = arr.size;
+    m = arr.length;
     for (size_t i = 0; i < m; i++)
     {
         printf("%d \n", arr.A[i]);
@@ -134,6 +134,34 @@ float avg(struct Array arr){
     return average;
 }
 
+void reverse(struct Array *arr){
+    int i,j = 0;
+    int* B;
+    B = malloc(arr->length * sizeof(int));
+    for (i = arr->length - 1, j=0; i >= 0; i--,j++)
+    {
+        B[j]=arr->A[i];
+    }
+
+    for (size_t i = 0; i < arr->length; i++)
+    {
+        arr->A[i] = B[i];
+
+    } 
+}
+
+void reverse2(struct Array *arr){
+    int i,j, temp = 0;
+
+    for (size_t i = 0; i <= (arr->length/2) ; i++)
+    {
+        temp = arr->A[i];
+        arr->A[i] = arr->A[arr->length -1 -i];
+        arr->A[arr->length -1 -i] = temp;
+    }
+       
+}
+
 int main(){
     struct Array arr ={{2,3,4,5,6},10,5};
     /*	
@@ -162,7 +190,7 @@ int main(){
     printf("element found at %d \n", LinearSearch(&arr, 4));
     Display(arr);   
     printf("Element found at %d \n", BinarySearch(arr, 2));
-    */
+
     printf("Get element at 2 : %d \n", get(arr, 2));
     printf("Set element at 22 at 2 \n");
     set(&arr, 2, 22);
@@ -171,7 +199,9 @@ int main(){
     printf("Max element %d \n", Max(arr));
     printf("Sum of elements is %d \n", sum(arr));
     printf("Average of elements is %f \n", avg(arr));
-
+    */
+    reverse2(&arr);
+    printf("Array reversed: \n");
+    Display(arr);
     return 0;
-      
 }
