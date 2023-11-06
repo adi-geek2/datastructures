@@ -114,7 +114,6 @@ int Max(struct Array arr){
         {
             max = arr.A[i];
         }
-        
     }
     return max;
 }
@@ -184,8 +183,48 @@ void rotate_left(struct Array *arr){
        
 }
 
+void insert_sort(struct Array *arr, int x){
+    int i = arr->length-1;
+    while (x < arr->A[i])
+    {
+        arr->A[i+1] = arr->A[i];
+        i--;
+    }
+    arr->A[i+1] = x;
+    arr->length = arr->length + 1;
+}
+
+int is_array_sorted(struct Array arr){
+    for (size_t i = 0; i < (arr.length-2); i++)
+    {
+        if (arr.A[i] > arr.A[i+1])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void rearrange(struct Array *arr)
+{
+    int i,j;
+    i=0;
+    j= arr->length-1;
+
+    while (i < j)
+    {
+       while(arr->A[i] < 0){i++;}
+       while(arr->A[j] > 0){j--;}
+       if (i<j)
+       {
+       swap(&arr->A[i],&arr->A[j]);
+       }
+    }
+};
+
 int main(){
-    struct Array arr ={{2,3,4,5,6},10,5};
+    struct Array arr ={{2,3,4,12,15,16},10,6};
+    struct Array arr_neg ={{2,-3,4,-12,15,16},10,6};
     /*	
     int i;
     printf("Enter size of an array");
@@ -221,9 +260,13 @@ int main(){
     printf("Max element %d \n", Max(arr));
     printf("Sum of elements is %d \n", sum(arr));
     printf("Average of elements is %f \n", avg(arr));
-    */
     rotate_left(&arr);
     printf("Array left rotated: \n");
-    Display(arr);
+    insert_sort(&arr, 3);
+    printf("Array inserted: \n");
+    printf("Is array sorted ? 0 means no and 1 means yes: %d \n", is_array_sorted(arr));
+    */
+    rearrange(&arr_neg);
+    Display(arr_neg);
     return 0;
 }
