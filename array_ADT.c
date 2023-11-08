@@ -222,10 +222,41 @@ void rearrange(struct Array *arr)
     }
 };
 
+struct Array* merge(struct Array *arr1, struct Array *arr2){
+    struct Array* arr3 = (struct Array*) malloc(sizeof(struct Array));
+    arr3->length =  arr1->length + arr2->length;
+    arr3->size =  arr1->size + arr2->size;
+    int i=0;
+    int j=0;
+    int k=0;
+
+    while (i < arr1->length && j < arr2->length)
+    {
+        if (arr1->A[i] > arr2->A[j]){
+            arr3->A[k++] = arr2->A[j++];
+        }
+        else
+        {
+            arr3->A[k++] = arr1->A[i++];
+        }
+    }
+    for(; i < arr1->length; i++)
+    {
+        arr3->A[k++] = arr1->A[i];
+    }
+    for(; j < arr1->length; j++)
+    {
+        arr3->A[k++] = arr2->A[j];
+    }
+    return arr3;
+}
+
 int main(){
-    struct Array arr ={{2,3,4,12,15,16},10,6};
-    struct Array arr_neg ={{2,-3,4,-12,15,16},10,6};
+    struct Array arr1 ={{2,3,4,12,15},10,5};
+    struct Array arr2 = {{1,5,6,7,8},10,5};
+
     /*	
+    struct Array arr_neg ={{2,-3,4,-12,15,16},10,6};
     int i;
     printf("Enter size of an array");
     scanf("%d",&arr.size);
@@ -265,8 +296,8 @@ int main(){
     insert_sort(&arr, 3);
     printf("Array inserted: \n");
     printf("Is array sorted ? 0 means no and 1 means yes: %d \n", is_array_sorted(arr));
-    */
     rearrange(&arr_neg);
-    Display(arr_neg);
+    */
+    Display(*merge(&arr1,&arr2));
     return 0;
 }
