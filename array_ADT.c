@@ -14,7 +14,7 @@ void Display(struct Array arr)
     m = arr.length;
     for (size_t i = 0; i < m; i++)
     {
-        printf("%d \n", arr.A[i]);
+        printf("%d \t", arr.A[i]);
     }
     
 }
@@ -251,9 +251,109 @@ struct Array* merge(struct Array *arr1, struct Array *arr2){
     return arr3;
 }
 
+struct Array* Union(struct Array *arr1, struct Array *arr2){
+    struct Array* arr3 = (struct Array*) malloc(sizeof(struct Array));
+    
+    int i=0;
+    int j=0;
+    int k=0;
+
+    while (i < arr1->length && j < arr2->length)
+    {
+        if (arr1->A[i] > arr2->A[j]){
+            arr3->A[k++] = arr2->A[j++];
+        }
+        else if(arr2->A[j] > arr1->A[i])
+        {
+            arr3->A[k++] = arr1->A[i++];
+        }
+        else
+        {
+            arr3->A[k++] = arr1->A[i++];
+            j++;
+        }
+    }
+    for(; i < arr1->length; i++)
+    {
+        arr3->A[k++] = arr1->A[i];
+    }
+    for(; j < arr1->length; j++)
+    {
+        arr3->A[k++] = arr2->A[j];
+    }
+
+    arr3->length = k;
+    arr3->size = 10;
+
+    return arr3;
+}
+
+struct Array* Intersection(struct Array *arr1, struct Array *arr2){
+    struct Array* arr3 = (struct Array*) malloc(sizeof(struct Array));
+    
+    int i=0;
+    int j=0;
+    int k=0;
+
+    while (i < arr1->length && j < arr2->length)
+    {
+        if (arr1->A[i] > arr2->A[j]){
+            j++;
+        }
+        else if(arr2->A[j] > arr1->A[i])
+        {
+            i++;
+        }
+        else
+        {
+            arr3->A[k++] = arr1->A[i++];
+            j++;
+        }
+    }
+    
+    arr3->length = k;
+    arr3->size = 10;
+
+    return arr3;
+}
+
+struct Array* Difference(struct Array *arr1, struct Array *arr2){
+    struct Array* arr3 = (struct Array*) malloc(sizeof(struct Array));
+    
+    int i=0;
+    int j=0;
+    int k=0;
+
+    while (i < arr1->length && j < arr2->length)
+    {
+        if (arr1->A[i] > arr2->A[j]){
+            j++;
+        }
+        else if(arr2->A[j] > arr1->A[i])
+        {
+            arr3->A[k++] = arr1->A[i++];
+        }
+        else
+        {
+            i++;
+            j++;
+        }
+    }
+    
+    for(; i < arr1->length; i++)
+    {
+        arr3->A[k++] = arr1->A[i];
+    }
+
+    arr3->length = k;
+    arr3->size = 10;
+
+    return arr3;
+}
+
 int main(){
-    struct Array arr1 ={{2,3,4,12,15},10,5};
-    struct Array arr2 = {{1,5,6,7,8},10,5};
+    struct Array arr1 ={{2,3,4,10,15},10,5};
+    struct Array arr2 = {{1,3,6,10,15},10,5};
 
     /*	
     struct Array arr_neg ={{2,-3,4,-12,15,16},10,6};
@@ -297,7 +397,10 @@ int main(){
     printf("Array inserted: \n");
     printf("Is array sorted ? 0 means no and 1 means yes: %d \n", is_array_sorted(arr));
     rearrange(&arr_neg);
-    */
     Display(*merge(&arr1,&arr2));
+    Display(*(Union(&arr1,&arr2)));
+    Display(*(Intersection(&arr1,&arr2)));
+    */
+    Display(*(Difference(&arr1,&arr2)));
     return 0;
 }
