@@ -3,7 +3,7 @@
 
 struct Array
 {
-    int A[10];
+    int *A;
     int size;
     int length;
 };
@@ -16,7 +16,6 @@ void Display(struct Array arr)
     {
         printf("%d \t", arr.A[i]);
     }
-    
 }
 
 void Append(struct Array *arr, int value)
@@ -118,7 +117,7 @@ int Max(struct Array arr){
     return max;
 }
 
-int sum(struct Array arr){
+int Sum(struct Array arr){
     int sum = 0;
     for (size_t i = 0; i < arr.length; i++)
     {
@@ -129,7 +128,7 @@ int sum(struct Array arr){
 
 float avg(struct Array arr){
     float average = 0;
-    average = (float) sum(arr) / arr.length;
+    average = (float) Sum(arr) / arr.length;
     return average;
 }
 
@@ -352,10 +351,59 @@ struct Array* Difference(struct Array *arr1, struct Array *arr2){
 }
 
 int main(){
+    struct Array arr1;
+    printf("Enter size of array");
+    scanf("%d",&arr1.size);
+    arr1.A = (int*)malloc(arr1.size*sizeof(int));
+    int ch;
+
+    do
+    {
+        printf("Welcome! \n");
+        printf("1.Insert \n");
+        printf("2.Delete \n");
+        printf("3.Search \n");
+        printf("4.Sum \n");
+        printf("5.Display \n");
+        printf("Enter your choice! \n");
+        scanf("%d", &ch);
+
+        int index;
+        switch (ch)
+        {
+        case 1:
+            int value;
+            printf("Enter index and value \n");
+            scanf("%d%d",&index, &value);
+            Insert(&arr1, index, value);
+            break;
+        case 2:
+            printf("Enter index to be deleted! \n");
+            scanf("%d",&index);
+            Delete(&arr1, index);
+             break;
+        case 3:
+            int key;
+            printf("Enter key to be searched! \n");
+            scanf("%d",&key);
+            index = BinarySearch(arr1, key);
+            printf("Element found at %d \n", index);
+             break;
+        case 4:
+            int sum;
+            sum = Sum(arr1);
+            printf("The sum is %d \n", sum);
+             break;
+        case 5:
+            Display(arr1);
+        default:
+            break;
+        }
+    }while(ch<6);
+    /*	
     struct Array arr1 ={{2,3,4,10,15},10,5};
     struct Array arr2 = {{1,3,6,10,15},10,5};
 
-    /*	
     struct Array arr_neg ={{2,-3,4,-12,15,16},10,6};
     int i;
     printf("Enter size of an array");
@@ -400,7 +448,7 @@ int main(){
     Display(*merge(&arr1,&arr2));
     Display(*(Union(&arr1,&arr2)));
     Display(*(Intersection(&arr1,&arr2)));
-    */
     Display(*(Difference(&arr1,&arr2)));
+    */
     return 0;
 }
